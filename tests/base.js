@@ -1,6 +1,6 @@
 var expect = require('chai').expect,
     mempool,
-    Base = require('../lib/_base.js'),
+    Base = require('../lib/base'),
     base = new Base();
 
 
