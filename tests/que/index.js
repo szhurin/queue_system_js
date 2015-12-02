@@ -63,7 +63,6 @@ describe('que testing', function () {
                 testObj.empty += 1;
             });
 
-
             que.pushValue(1)
                 .pushValue(2)
                 .pushValue(3)
@@ -86,15 +85,14 @@ describe('que testing', function () {
                 };
 
             que.on('overflow', function (value) {
-                testObj.overflow = value
+                testObj.overflow = value;
             });
             que.on('leak', function (value) {
-                testObj.leak = value
+                testObj.leak = value;
             });
             que.on('empty', function () {
-                testObj.empty += 1
+                testObj.empty += 1;
             });
-
 
             que.pushValue(1)
                 .pushValue(2)

@@ -49,7 +49,6 @@ describe('que testing', function () {
 
             var que = new Que(5);                /*OVERFLOW*/
 
-
             expect(que.isEmpty()).to.be.equals(true);
             expect(que.isFull()).to.be.equals(false);
 
@@ -80,7 +79,6 @@ describe('que testing', function () {
         it('leak test', function () {
 
             var que = new Que(5, Que.prototype.LEAK);
-
 
             que.pushValue(1)
                 .pushValue(2)
