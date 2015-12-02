@@ -1,6 +1,6 @@
 var expect = require('chai').expect,
     mempool,
-    Que = require('../../lib/que');
+    Que = require('../../lib/que/simple');
 
 
 describe('que testing', function () {
@@ -47,53 +47,39 @@ describe('que testing', function () {
 
         it('overflow test', function () {
 
-            var que = new Que(5),
-                /*OVERFLOW*/
-                testObj = {
-                    empty: 0
-                };
+            var que = new Que(5);                /*OVERFLOW*/
 
-            que.on('overflow', function (value) {
-                testObj.overflow = value;
-            });
-            que.on('leak', function (value) {
-                testObj.leak = value;
-            });
-            que.on('empty', function () {
-                testObj.empty += 1;
-            });
 
+            expect(que.isEmpty()).to.be.equals(true);
+            expect(que.isFull()).to.be.equals(false);
 
             que.pushValue(1)
-                .pushValue(2)
-                .pushValue(3)
+                .pushValue(2);
+
+            expect(que.isEmpty()).to.be.equals(false);
+            expect(que.isFull()).to.be.equals(false);
+
+
+            que.pushValue(3)
                 .pushValue(4)
-                .pushValue(5)
-                .pushValue(6);
+                .pushValue(5);
 
-            expect(testObj.overflow).to.be.equals(6);
+            expect(que.isEmpty()).to.be.equals(false);
+            expect(que.isFull()).to.be.equals(true);
 
-            que.getValues(6);
+            que.pushValue(6);
 
-            expect(testObj.empty).to.be.equals(1);
+            expect(que.isFull()).to.be.equals(true);
+            expect(que.getValue()).to.be.equals(1);
+            expect(que.getValue()).to.be.equals(2);
+            expect(que.getValue()).to.be.equals(3);
+            expect(que.getValue()).to.be.equals(4);
+            expect(que.getValue()).to.be.equals(5);
         });
 
         it('leak test', function () {
 
-            var que = new Que(5, Que.prototype.LEAK),
-                testObj = {
-                    empty: 0
-                };
-
-            que.on('overflow', function (value) {
-                testObj.overflow = value
-            });
-            que.on('leak', function (value) {
-                testObj.leak = value
-            });
-            que.on('empty', function () {
-                testObj.empty += 1
-            });
+            var que = new Que(5, Que.prototype.LEAK);
 
 
             que.pushValue(1)
@@ -103,13 +89,10 @@ describe('que testing', function () {
                 .pushValue(5)
                 .pushValue(6);
 
-            expect(testObj.leak).to.be.equals(1);
-
-            que.getValues(6);
-
-            expect(testObj.empty).to.be.equals(1);
+            expect(que.getValue()).to.be.equals(2);
+            expect(que.getValue()).to.be.equals(3);
         });
 
     });
 
-})
+});
