@@ -110,4 +110,4 @@ describe('que testing', function () {
 
     });
 
-})
+});
