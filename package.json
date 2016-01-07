@@ -1,20 +1,21 @@
 {
-    "name": "queueing",
-    "version": "0.0.1",
-    "description": "Queueing system",
-    "main": "index.js",
-    "scripts": {
-        "test": "mocha tests"
-    },
-    "keywords": [
-        "queue",
-        "queueing"
-    ],
-    "author": "szhurin",
-    "license": "MIT",
-
-    "dependencies": {},
-    "devDependencies": {
-        "chai": "*"
-    }
+  "name": "queueing",
+  "version": "0.0.1",
+  "description": "Queueing system",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "keywords": [
+    "queue",
+    "queueing"
+  ],
+  "author": "szhurin",
+  "license": "MIT",
+  "dependencies": {
+    "eventemitter3": "~1.1.1"
+  },
+  "devDependencies": {
+    "chai": "*"
+  }
 }
