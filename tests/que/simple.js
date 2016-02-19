@@ -93,4 +93,67 @@ describe('que testing', function () {
 
     });
 
+    describe('get Bind function test', function () {
+
+        it('overflow test', function () {
+
+            var que = new Que(5);                /*OVERFLOW*/
+
+
+            var pushFunctions = que.getBindFunction('pushValue');
+            var isEmptyFunctions = que.getBindFunction('isEmpty');
+            var isFullFunctions = que.getBindFunction('isFull');
+            var getValueFunctions = que.getBindFunction('getValue');
+
+
+            expect(isEmptyFunctions()).to.be.equals(true);
+            expect(isFullFunctions()).to.be.equals(false);
+
+
+            pushFunctions(1);
+            pushFunctions(2);
+
+            expect(isEmptyFunctions()).to.be.equals(false);
+            expect(isFullFunctions()).to.be.equals(false);
+
+
+            pushFunctions(3);
+            pushFunctions(4);
+            pushFunctions(5);
+
+            expect(isEmptyFunctions()).to.be.equals(false);
+            expect(isFullFunctions()).to.be.equals(true);
+
+            pushFunctions(6); // will not be pushed - is overflowed
+
+            expect(isFullFunctions()).to.be.equals(true);
+            expect(getValueFunctions()).to.be.equals(1);
+            expect(getValueFunctions()).to.be.equals(2);
+            expect(getValueFunctions()).to.be.equals(3);
+            expect(getValueFunctions()).to.be.equals(4);
+            expect(getValueFunctions()).to.be.equals(5);
+        });
+
+        it('leak test', function () {
+
+            var que = new Que(5, Que.prototype.LEAK);
+
+            var pushFunctions = que.getBindFunction('pushValue');
+            var getValueFunctions = que.getBindFunction('getValue');
+
+
+            pushFunctions(1);
+            pushFunctions(2);
+            pushFunctions(3);
+            pushFunctions(4);
+            pushFunctions(5);
+            pushFunctions(6); // the 1 will be LEAKed
+            pushFunctions(7); // the 2 will be LEAKed
+
+            expect(getValueFunctions()).to.be.equals(3);
+            expect(getValueFunctions()).to.be.equals(4);
+        });
+
+    });
+
 });

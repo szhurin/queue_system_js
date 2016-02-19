@@ -1,5 +1,5 @@
 var expect = require('chai').expect,
-    Wire = require('../../lib/wire');
+    Wire = require('../lib/wire');
 
 describe('Wire index testing', function () {
 
